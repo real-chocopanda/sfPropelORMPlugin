@@ -360,12 +360,21 @@ abstract class sfPropelBaseTask extends sfBaseTask
     );
   }
 
-  public function getConnections($databaseManager)
+    /**
+     * @param $databaseManager
+     * @param bool $onlyMigrationEnabled Exclude connections to databases flagged with migration_enabled=false
+     * @return array Array of connections
+     */
+    public function getConnections($databaseManager, $onlyMigrationEnabled = false)
   {
     $connections = array();
     foreach ($databaseManager->getNames() as $connectionName)
     {
       $database = $databaseManager->getDatabase($connectionName);
+      if ($onlyMigrationEnabled && !$database->getParameter('migration_enabled', true))
+      {
+          continue;
+      }
       $connections[$connectionName] = array(
         'adapter'  => $database->getParameter('phptype'),
         'dsn'      => $database->getParameter('dsn'),

@@ -53,7 +53,7 @@ EOF;
   protected function execute($arguments = array(), $options = array())
   {
     $databaseManager = new sfDatabaseManager($this->configuration);
-    $connections = $this->getConnections($databaseManager);
+    $connections = $this->getConnections($databaseManager, true);
     $manager = new PropelMigrationManager();
     $manager->setConnections($connections);
     $manager->setMigrationTable($options['migration-table']);

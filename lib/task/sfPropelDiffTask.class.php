@@ -68,7 +68,7 @@ EOF;
   protected function execute($arguments = array(), $options = array())
   {
     $databaseManager = new sfDatabaseManager($this->configuration);
-    $connections = $this->getConnections($databaseManager);
+    $connections = $this->getConnections($databaseManager, true);
 
     $this->logSection('propel', 'Reading databases structure...');
     $ad = new AppData();
